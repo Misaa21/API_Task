@@ -14,7 +14,6 @@ function App() {
   const [editingProduct, setEditingProduct] = useState(null)
   const [showForm, setShowForm] = useState(false)
 
-  // Fetch smartphone products from API
   useEffect(() => {
     fetchSmartphoneProducts()
   }, [])
@@ -31,7 +30,6 @@ function App() {
     }
   }
 
-  // Handle search
   const handleSearch = (searchTerm) => {
     const filtered = products.filter(
       (product) =>
@@ -42,7 +40,6 @@ function App() {
     setCurrentPage(1)
   }
 
-  // Handle add product
   const handleAddProduct = async (productData) => {
     try {
       const response = await axios.post(
@@ -72,7 +69,6 @@ function App() {
   
       console.log("Editing Product Data:", productData);
   
-      // Sending PUT request to update product
       const response = await axios.put(
         `https://dummyjson.com/products/${productData.id}`,
         {
@@ -87,7 +83,6 @@ function App() {
   
       const updatedProduct = response.data;
   
-      // Update the state with the updated product
       const updatedProducts = products.map((product) =>
         product.id === updatedProduct.id ? updatedProduct : product
       );
@@ -105,7 +100,6 @@ function App() {
   
   
 
-  // Handle delete product
   const handleDeleteProduct = async (productId) => {
     try {
       await axios.delete(`https://dummyjson.com/products/${productId}`)
@@ -117,7 +111,6 @@ function App() {
     }
   }
 
-  // Calculate pagination
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
   const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem)

@@ -21,19 +21,20 @@ function ProductTable({ products, onEdit, onDelete }) {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id}>
+            <tr
+              key={product.id}
+              className="product-row cursor-pointer"
+              onClick={() => setSelectedProduct(product)}
+            >
               <td>
                 <img
                   src={product.thumbnail || "/placeholder.svg"}
                   alt={product.title}
-                  className="product-thumbnail cursor-pointer"
-                  onClick={() => setSelectedProduct(product)}
+                  className="product-thumbnail"
                 />
               </td>
-              <td>
-                <button className="text-left hover:underline" onClick={() => setSelectedProduct(product)}>
-                  {product.title}
-                </button>
+              <td className="product-title">
+                {product.title}
               </td>
               <td>{product.brand}</td>
               <td>
@@ -44,12 +45,16 @@ function ProductTable({ products, onEdit, onDelete }) {
               </td>
               <td>{product.rating}</td>
               <td>
-                <button className="edit-button" onClick={() => onEdit(product)}>
+                <button className="edit-button" onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(product);
+                }}>
                   Edit
                 </button>
                 <button
                   className="delete-button"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (window.confirm("Are you sure you want to delete this smartphone?")) {
                       onDelete(product.id)
                     }
@@ -73,4 +78,3 @@ function ProductTable({ products, onEdit, onDelete }) {
 }
 
 export default ProductTable
-
